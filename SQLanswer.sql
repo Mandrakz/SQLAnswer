@@ -1,5 +1,4 @@
-
-/*1.CREATION OF TABLE [EmployeeIntoTable]
+/*1.CREATION OF STRUCTURE>  TABLE [EmployeeIntoTable]
 */
 Drop TABLE IF EXISTS  [SQLQuestionsInterview].[dbo].[EmployeeIntoTable]
 Create TABLE [SQLQuestionsInterview].[dbo].[EmployeeIntoTable] (
@@ -16,14 +15,14 @@ Gender VARCHAR(1) NOT NULL
 );
 
 
-/*1.CREATION OF TABLE [EmployeePosition]
+/*1.CREATION OF STRUCTURE> TABLE [EmployeePosition]
 */
 Drop TABLE IF EXISTS  [SQLQuestionsInterview].[dbo].[EmployeePosition]
 Create TABLE [SQLQuestionsInterview].[dbo].[EmployeePosition] (
 
 EmpID INT ,
 EmpPosition VARCHAR(50) NOT NULL,
-DateofJoining DATE NOT NULL,
+DateofJoining DATE,
 Salary INT NOT NULL
 
 FOREIGN KEY (EmpID) REFERENCES [SQLQuestionsInterview].[dbo].[EmployeeIntoTable](EmpID) ON DELETE CASCADE
@@ -45,7 +44,7 @@ VALUES
 (2,'Executive',cast('02-05-2022' AS datetime),75000),
 (3,'Manager',cast('01-05-2022' AS datetime),90000),
 (2,'Lead',cast('02-05-2022' AS datetime),85000),
-(1,'Executive',cast('01-05-2022' AS datetime),300000);
+(1,'Executive',cast('01-05-2022' AS datetime),300000)
 /****************************3.SOLUTION**********************************/
 /*SQL INTERVIEW QUESTION*/
 SELECT [EmpFname]
@@ -60,5 +59,19 @@ SELECT [EmpFname]
   INNER JOIN  [SQLQuestionsInterview].[dbo].[EmployeePosition] EmplPos
   ON EmplTab.EmpID = EmplPos.EmpID
   WHERE EmplPos.EmpPosition = 'Manager'
-  
-
+  /***************************3*SOLUTION**********************************/
+/*SQL INTERVIEW QUESTION*/
+  SELECT [EmpFname]
+      ,[EmpLname]
+      ,[Department]
+      ,[Project]
+      ,[Address]
+      ,[DOB]
+      ,[Gender]
+	  ,EmplPos.DateofJoining,
+	  EmplPos.EmpPosition,
+	  EmplPos.Salary
+  FROM [SQLQuestionsInterview].[dbo].[EmployeeIntoTable] AS EmplTab
+  INNER JOIN  [SQLQuestionsInterview].[dbo].[EmployeePosition] EmplPos
+  ON EmplTab.EmpID = EmplPos.EmpID
+  WHERE DateofJoining IS NOT NULL /*If DateOfJoining was defined in the structured for accepting NULL values you must write this line, else NOPE(DATEOFJOINING CAN´T ADMIT NULL VALUES> don´t WRITE THIS LINE) */
